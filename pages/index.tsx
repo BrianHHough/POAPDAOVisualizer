@@ -3,16 +3,37 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useMoralis } from "react-moralis";
-
+import useSWR from 'swr';
 import NavBar from "../components/NavBar"
+import LinearProgress from '@mui/material/LinearProgress';
 
-const Home: NextPage = () => {
+const fetcher = (url: any) => fetch(url).then((res) => res.json());
+
+export default function Home({data: any}: any) {
   const { 
     authenticate, 
     isAuthenticated, 
     user,
   } = useMoralis();
-  if (isAuthenticated) {
+  const userAddress = user?.get("ethAddress");
+  const chainID = 1;
+  const covalentUserData = `https://api.covalenthq.com/v1/${ chainID }/address/${ userAddress }/portfolio_v2/?key=${
+    process.env.NEXT_PUBLIC_COVALENT_API_KEY
+  }`
+  const { data, error } = useSWR(covalentUserData, fetcher);
+  {console.log(data)}
+  // Return States
+
+  if (!data) return (
+    <div 
+      style={{fill: "background: linear-gradient(45deg, #5d00ff94, #e5aec8a3 )", backgroundColor: "background: linear-gradient(45deg, #5d00ff94, #e5aec8a3 )", color: "black", height: "100vh"}}>
+      <div style={{color: "white", fontSize: "200pt", width: "100vw"}}>
+        <LinearProgress />
+      </div>
+      <h1 style={{color: "white"}}>Loading Your Web3 Footprint...</h1>
+        {console.log(data)}
+    </div>)
+  if (isAuthenticated)
   return (
     <div className={styles.container}>
       <Head>
@@ -26,6 +47,7 @@ const Home: NextPage = () => {
         <h1>
           See my web3 dao footprint
         </h1>
+
 
         <p className={styles.description}>
           
@@ -47,8 +69,7 @@ const Home: NextPage = () => {
       </footer>
     </div>
     )
-  }
-  else {
+  if (!isAuthenticated)
     return (
       <div className={styles.container}>
       <Head>
@@ -85,7 +106,6 @@ const Home: NextPage = () => {
     </div>
 
     )
-  }
 }
 
-export default Home
+
