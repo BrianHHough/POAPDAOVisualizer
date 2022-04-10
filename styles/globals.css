@@ -2,7 +2,6 @@ html,
 body {
   padding: 0;
   margin: 0;
-  line-height: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -46,6 +45,8 @@ a {
 
 .DashboardSelectItemCon {
   display: flex;
+
+  line-height: 0;
 }
 
 .DashboardSelectItem {
@@ -124,6 +125,7 @@ a {
   border: 1px solid rgba(255,255,255,0.2);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  line-height: 0;
 }
 
 .CoinItem:hover {
@@ -161,4 +163,34 @@ a {
   text-align: center;
   font-weight: 600;
   font-size: 20pt;
+}
+
+/* NFTs */
+
+.POAPItem {
+  width: 200px;
+  height: 300px;
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.POAPItem:hover {
+  transform: scale(1.1);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 8px 32px 0 rgba(112, 31, 135, 0.247);
+}
+
+.POAPItemTitle {
+  text-align: center;
+  line-height: 1;
+  font-size: 15pt;
+}
+
+.POAPItemDescription {
+  font-size: 10pt;
+  margin: 10px;
 }

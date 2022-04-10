@@ -9,6 +9,6 @@ module.exports = {
       NEXT_PUBLIC_MORALIS_SERVER_URL: process.env.NEXT_PUBLIC_MORALIS_SERVER_URL
   },
   images: {
-      domains: ['localhost', 'logos.covalenthq.com'],
+      domains: ['localhost', 'logos.covalenthq.com', 'assets.poap.xyz', 'www.poap.xyz'],
   },
 }
