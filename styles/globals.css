@@ -168,8 +168,8 @@ a {
 /* NFTs */
 
 .POAPItem {
-  width: 200px;
-  height: 300px;
+  width: 250px;
+  height: 375px;
   border-radius: 15px;
   margin-left: 10px;
   margin-right: 10px;
@@ -188,6 +188,11 @@ a {
   text-align: center;
   line-height: 1;
   font-size: 15pt;
+}
+
+.POAPItemDAOPicture {
+  text-align: center;
+  border-radius: 15px;
 }
 
 .POAPItemDescription {
