@@ -92,7 +92,6 @@ export default function Home({data: any}: any) {
   const { data: poaps } = useSWR(cryptoPOAPs, fetcher);
   {console.log(poaps)}
   
-  
   // Return States
 
   if (!coins) return (
@@ -132,7 +131,6 @@ export default function Home({data: any}: any) {
           </div>
         </div>
         </div>
-
         <div className="DashboardSelectItem" onClick={() => setActivePage(2)}>
           <h2>My DAO Contributions</h2>
           <div className="PoweredByCon">
@@ -186,6 +184,7 @@ export default function Home({data: any}: any) {
             
             <h2 className="POAPItemTitle">{poap.event.name}</h2>
             <div className="POAPItemDAOPicture">
+              {/* {poap.event.chain === 'xdai' ? */}
               {poap.event.id === 27949 || 22504 ?
               <Image 
                 src={Logo_D_D}
@@ -195,10 +194,12 @@ export default function Home({data: any}: any) {
                 className="POAPItemDAOPicture"
               />
               : 
-              null 
-}
+              null
+              }
+              
             </div>
             <p className="POAPItemDescription">{poap.event.description}</p>
+            <p className="POAPItemDescription">You are <b>1</b> of <b>{poap.event.supply}</b> HODLERs</p>
             {/* <h4 className="CoinItemTitle">{poap.contract_name}</h4>
             {poap.contract_ticker_symbol === "ETH" ?
             <>
@@ -412,4 +413,5 @@ async function fetchData() {
 //       tokens: data
 //     }
 //   }
+//   {console.log(data)}
 // }
