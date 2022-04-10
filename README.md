@@ -2,7 +2,9 @@
 
 # <b>POAP NFT Visualizer</b>
 
-A NFT visualizer for DAOs, specifically focused on POAPs.
+A NFT visualizer for DAOs, specifically focused on POAPs and recognizing user contributions.
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/49ba87eb-1096-4ca3-8e1b-3ecf0b4bb62d/deploy-status)](https://app.netlify.com/sites/poapdaovisualizer/deploys)
 
 # Description:
 
@@ -20,6 +22,8 @@ I hope you like my dapp 😊
 - Data Layer / API: The Graph Protocol + GraphQL
 - Back-End: Ethers.js (Web3 API) + Solidity (Smart Contracts) + Moralis (Web3 Database + Hooks)
 - Blockchain: xDai (Gnosis) Chain + POAP (Proof of Attendance Protocol)
+
+The app leverages NEXTjs with TypeScript hard-typing for the front-end framework, a Data Layer / API using the Graph Protocol + GraphQL and Covalent, the back-end leverages the Ethers.js (Web3 API), and Moralis (Web3 Database + Hooks), and reads data from the xDai (Gnosis) Chain, Ethereum mainnet, and the POAP (Proof of Attendance Protocol) chain.
 
 # Getting Started
 

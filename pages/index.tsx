@@ -7,13 +7,61 @@ import useSWR from 'swr';
 import NavBar from "../components/NavBar"
 import LinearProgress from '@mui/material/LinearProgress';
 import React, {useState} from "react";
-
+import {createClient} from 'urql';
+ 
 // Imagery
 import Logo_POAPDAOVisualizer from "../assets/logo-POAP-NFT-Visualizer.png"
 import Logo_Covalent from "../assets/logo-covalent.webp"
+import Logo_D_D from "../assets/logo-developerdao.png"
+import Logo_TheGraph from "../assets/logo-graph.png"
 
 
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
+
+const client = createClient({
+  url: 'https://api.thegraph.com/subgraphs/name/brianhhough/ethglobalcryptocovenapi'
+})
+
+// The Graph GraphQL Query
+const query = `
+  query {
+    tokens(
+      orderBy: createdAtTimestamp
+      orderDirection: desc
+      first: 10
+    ) {
+      id
+      tokenID
+      contentURI
+      metadataURI
+    }
+  }
+`
+// const query = `
+//   query {
+//     tokens(
+//       first: 5
+//       orderDirection: desc
+//       orderBy: updatedAtTimestamp
+//     ) {
+//       id
+//       tokenID
+//       tokenURI
+//       externalURL
+//       image 
+//       name 
+//       description
+//       type 
+//       sun 
+//       moon 
+//       rising 
+//       updatedAtTimestamp 
+//       owner {
+//         id 
+//       }
+//     }
+//   }
+// `
 
 export default function Home({data: any}: any) {
   const { 
@@ -23,6 +71,7 @@ export default function Home({data: any}: any) {
   } = useMoralis();
 
   const [activePage, setActivePage] = useState(1);
+  const [ableToExplore, setAbleToExplore] = useState(false);
 
   // Token Balances
   const userAddress = user?.get("ethAddress");
@@ -37,7 +86,6 @@ export default function Home({data: any}: any) {
     process.env.NEXT_PUBLIC_COVALENT_API_KEY
   }`
   const { data: nfts } = useSWR(userNFTs, fetcher);
-  {console.log(nfts)}
 
   // User POAPs
   const cryptoPOAPs = `https://api.poap.xyz/actions/scan/${ userAddress }`
@@ -66,9 +114,13 @@ export default function Home({data: any}: any) {
 
       <main className={styles.main}>
         <NavBar/>
+        {activePage === 1 ?
         <h1>
           See my web3 dao footprint
         </h1>
+        : 
+        null
+        }
 
         <div className="DashboardSelectItemCon">
         <div className="DashboardSelectItem" onClick={() => setActivePage(1)}>
@@ -82,7 +134,7 @@ export default function Home({data: any}: any) {
         </div>
 
         <div className="DashboardSelectItem" onClick={() => setActivePage(2)}>
-          <h2>My NFTs</h2>
+          <h2>My DAO Contributions</h2>
           <div className="PoweredByCon">
           <h4>Powered by: </h4> 
           <div className="Logo">
@@ -90,10 +142,32 @@ export default function Home({data: any}: any) {
           </div>
         </div>
         </div>
+
+        <div className="DashboardSelectItem" onClick={() => setActivePage(3)}>
+          <h2>Explorer</h2>
+          <div className="PoweredByCon">
+          <h4>Powered by: </h4> 
+          <div className="Logo">
+            <Image src={Logo_TheGraph}  alt="Covalent"/>
+          </div>
+        </div>
+        </div>
         </div>
 
         {activePage === 2 ?
         <>
+        <div style={{display: "flex"}}>
+        <h3>My DAOs:</h3>
+        <div style={{transform:"scale(0.8)"}}>
+        <Image 
+                src={Logo_D_D}
+                alt="D_D Logo"
+                width="200px"
+                height="50px"
+                className="POAPItemDAOPicture"
+              />
+        </div>
+        </div>
         <div style={{display: "flex"}}>
         {poaps.map((poap: any) => (
           <div 
@@ -104,13 +178,26 @@ export default function Home({data: any}: any) {
               <Image 
                 src={poap.event.image_url} 
                 // src={coins.data.items.logo_url} 
-                alt="CryptoCurrency logo"
-                width="50px"
-                height="50px"
+                alt="NFT logo"
+                width="80px"
+                height="80px"
               />
             </div>
             
             <h2 className="POAPItemTitle">{poap.event.name}</h2>
+            <div className="POAPItemDAOPicture">
+              {poap.event.id === 27949 || 22504 ?
+              <Image 
+                src={Logo_D_D}
+                alt="D_D Logo"
+                width="200px"
+                height="50px"
+                className="POAPItemDAOPicture"
+              />
+              : 
+              null 
+}
+            </div>
             <p className="POAPItemDescription">{poap.event.description}</p>
             {/* <h4 className="CoinItemTitle">{poap.contract_name}</h4>
             {poap.contract_ticker_symbol === "ETH" ?
@@ -203,6 +290,27 @@ export default function Home({data: any}: any) {
         null
         }
 
+        {activePage === 3 ?
+        <>
+          <div style={{textAlign: "center"}}>
+            <h1>You are exploring: </h1>
+            <h2 style={{fontWeight: "600"}}>{"✨ "} CryptoCoven {" ✨"}</h2>
+            <p></p>
+            <br></br>
+            {ableToExplore === false ?
+            <>
+            <p>Uh..oh... you don&apos;t have this NFT</p>
+            <button> Check out this Project on OpenSea</button>
+            </>
+            :
+            null 
+            }
+          </div>
+        </>
+        :
+        null 
+        }
+
         {console.log(coins)}
         {console.log(coins.data.items[0].logo_url)}
 
@@ -267,4 +375,41 @@ export default function Home({data: any}: any) {
     )
 }
 
+async function fetchData() {
+  const data = await client
+    .query(query)
+    .toPromise()
+    .then(async result => {
+      // @ts-ignore
+      // const tokenData = await Promise.all(result.data.
+      // tokens.map(async token => {
+      //   const meta = await (await fetch(token.metadataURI)).json()
+      //   console.log(" meta: ", meta)
+      //   if (meta.mimeType === 'video/mp4') {
+      //     token.type = 'video'
+      //     token.meta = meta
+      //   }
+      //   else if (meta.body && meta.body.mimeType === 'audio/wav') {
+      //     token.type = 'audio'
+      //     token.meta = meta.body
+      //   }
+      //   else {
+      //     token.type = 'image'
+      //     token.meta = meta
+      //   }
+      //   return token
+      // }))
+      // return tokenData
+    })
+  return data
+}
 
+// Get data from graphql query from subgraph
+// export async function getServerSideProps() {
+//   const data = await fetchData()
+//   return {
+//     props: {
+//       tokens: data
+//     }
+//   }
+// }
