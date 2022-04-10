@@ -17,7 +17,9 @@ export default function AccountMenu() {
   const { 
   authenticate, 
   isAuthenticated, 
+  isAuthenticating,
   user,
+  logout
   } = useMoralis();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -32,9 +34,12 @@ export default function AccountMenu() {
       <Box 
       className="NavBarCon"
       sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', float: "right", right: "0px", position: "relative", transform: "scale(1.7)"}}>
+            <Typography sx={{ minWidth: 100 }}>Dashboard</Typography>
+            <Typography sx={{ minWidth: 100 }}>My DAOs</Typography>
+            <Typography sx={{ minWidth: 100 }}>DAO Explorer</Typography>
             <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-            <Typography sx={{ minWidth: 100 }}>Profile</Typography>
-            <Tooltip title="Account settings">
+            
+            <Tooltip title="Account Information">
             <IconButton
                 onClick={handleClick}
                 size="small"
@@ -43,7 +48,7 @@ export default function AccountMenu() {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             >
-                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                <Avatar sx={{ width: 32, height: 32 }}></Avatar>
             </IconButton>
             </Tooltip>
       </Box>
@@ -83,17 +88,17 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar /> My Account
         </MenuItem>
         <MenuItem>
-          <Avatar /> My account
+          <Avatar /> My DAOs
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
-          Add another account
+          Add a DAO
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
@@ -101,7 +106,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => logout()} disabled={isAuthenticating}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

@@ -2,6 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  line-height: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -43,6 +44,42 @@ a {
   border: 1px solid rgba(255,255,255,0.2);
 }
 
+.DashboardSelectItemCon {
+  display: flex;
+}
+
+.DashboardSelectItem {
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px 0 rgba(112, 31, 135, 0.247);
+  width: 300px;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.DashboardSelectItem:hover {
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 8px 32px 0 rgba(112, 31, 135, 0.53);
+}
+
+.PoweredByCon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.6);
+}
+
+.Logo {
+  height: 50%;
+  width: 50%;
+  margin-left: 10px;
+  /* margin-left: 0.5rem; */
+}
+
 .ConnectButton {
   height: 50px;
   width: 100px;
@@ -76,4 +113,52 @@ a {
   width: 100%;
   float: right;
   right: 0;
+}
+
+.CoinItem {
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.CoinItem:hover {
+  transform: scale(1.1);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 8px 32px 0 rgba(112, 31, 135, 0.247);
+}
+
+.CoinItemLogo {
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  display: flex;
+  margin-top: 10px;
+}
+
+.CoinItemTitle {
+  text-align: center;
+}
+
+.CoinItemHoldings {
+  text-align: center;
+  font-weight: 100;
+  font-size: 40pt;
+}
+
+.CoinItemHoldingsEth {
+  text-align: center;
+  font-weight: 100;
+  font-size: 40pt;
+  margin-top: 40px;
+}
+
+.CoinItemHoldingsUSD {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20pt;
 }
